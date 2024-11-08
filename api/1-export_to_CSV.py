@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-This script exports the TODO list progress of a given employee ID to a CSV file.
-
+This script exports the TODO list progress
+of a given employee ID to a CSV file.
 It uses the REST API at https://jsonplaceholder.typicode.com to fetch
 user and task data and writes the completed and incomplete tasks to a CSV.
 """
@@ -39,9 +39,17 @@ if __name__ == "__main__":
     csv_filename = f"{employee_id}.csv"
 
     # Write data to the CSV file
-    with open(csv_filename, mode="w", newline="", encoding="utf-8") as csv_file:
+    with open(
+        csv_filename, mode="w", newline="", encoding="utf-8"
+    ) as csv_file:
         writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         for task in todos:
-            writer.writerow([employee_id, username, task.get("completed"), task.get("title")])
+            writer.writerow([
+                employee_id, username, task.get("completed"),
+                task.get("title")
+            ])
 
-    print(f"Data for employee ID {employee_id} has been exported to {csv_filename}")
+    print(
+        f"Data for employee ID {employee_id} has been "
+        f"exported to {csv_filename}"
+    )
