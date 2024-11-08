@@ -7,8 +7,9 @@ user and task data and writes the completed and incomplete tasks to a CSV.
 """
 
 import csv
-import sys
 import requests
+import sys
+
 
 if __name__ == "__main__":
     # Check if the script receives the employee ID as an argument
