@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+"""
+This script exports the TODO list progress of a given employee ID to a CSV file.
+
+It uses the REST API at https://jsonplaceholder.typicode.com to fetch
+user and task data and writes the completed and incomplete tasks to a CSV.
+"""
+
 import csv
 import sys
 import requests
