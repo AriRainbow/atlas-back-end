@@ -55,10 +55,11 @@ def export_all_employees_tasks():
 
     # Write the data to todo_all_employees.json
     with open("todo_all_employees.json", "w", encoding="utf-8") as json_file:
-        json.dump(all_tasks, json_file, indent=4)
-
-    print("Data for all employees has been " +
-          "exported to todo_all_employees.json")
+        json.dump(
+            all_tasks,
+            json_file,
+            indent=4
+        )
 
 
 if __name__ == "__main__":
