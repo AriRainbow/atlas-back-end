@@ -29,7 +29,7 @@ def fetch_data(url):
             # Print the first 100 characters of the response
             print(f"Failed to decode JSON from the response: "
                   f"{response.text[:100]}")
-            print(f"Full response: {response.text}")  # Full response for debugging
+            print(f"Full response: {response.text}")  # Full response for debug
             sys.exit(1)
 
     except requests.exceptions.RequestException as err:
