@@ -17,9 +17,25 @@ def fetch_data(url):
         response = requests.get(url)
         # Raise HTTPError for bad responses (4xx, 5xx)
         response.raise_for_status()
+
+        # Check if the response is empty
+        if not response.text.strip():
+            raise ValueError("Empty response from the API")
+        
         return response.json()
+    
     except requests.exceptions.RequestException as err:
-        print(f"Error fetching data from {url}: {err}")
+        # Add debugging info for the request error
+        print(f"Request error: {err}")
+        sys.exit(1)  # Exit silently in case of error
+
+    except ValueError as err:
+        # Handle empty response or non-JSON content
+        print(f"Value error: {err}")
+        sys.exit(1)  # Exit silently in case of error
+
+    except json.JSONDecodeError:
+        print("Failed to decode JSON. The response is not valid JSON.")
         sys.exit(1)
 
 
