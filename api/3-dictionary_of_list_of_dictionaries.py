@@ -23,48 +23,42 @@ def fetch_data(url):
         sys.exit(1)
 
 
-if __name__ == "__main__":
-    # Check if the script receives the employee ID as an argument
-    if len(sys.argv) != 2 or not sys.argv[1].isdigit():
-        print("Usage: python3 2-export_to_JSON.py <employee_id>")
-        sys.exit(1)
-
-    # Get the employee ID from the command line argument
-    employee_id = int(sys.argv[1])
-
+def export_all_employees_tasks():
+    """Fetches and exports the tasks of all employees to a JSON file."""
     # Define the base URL for the API
     base_url = "https://jsonplaceholder.typicode.com"
 
-    # Fetch user data
-    user_data = fetch_data(f"{base_url}/users/{employee_id}")
-    username = user_data.get("username")
-    if not username:
-        print("Employee not found or invalid employee ID.")
-        sys.exit(1)
+    # Fetch all users
+    users = fetch_data(f"{base_url}/users")
 
-    # Fetch the user's TODO list
-    todos = fetch_data(f"{base_url}/todos?userId={employee_id}")
+    # Dictionary to hold all tasks for each user
+    all_tasks = {}
 
-    # Prepare the data in the desired JSON format
-    json_data = {
-        str(employee_id): [
+    # Loop through each user and fetch their tasks
+    for user in users:
+        user_id = user['id']
+        username = user['username']
+        tasks = fetch_data(f"{base_url}/todos?userId={user_id}")
+
+        # Create a list of tasks for the user in the required format
+        task_list = [
             {
+                "username": username,
                 "task": task.get("title"),
-                "completed": task.get("completed"),
-                "username": username
+                "completed": task.get("completed")
             }
-            for task in todos
+            for task in tasks
         ]
-    }
 
-    # Create a JSON file named after the employee ID
-    json_filename = f"{employee_id}.json"
+        # Add the user's tasks to the all_tasks dictionary
+        all_tasks[user_id] = task_list
 
-    # Write data to the JSON file with indentation for readability
-    with open(json_filename, mode="w", encoding="utf-8") as json_file:
-        json.dump(json_data, json_file, indent=4)
+    # Write the data to todo_all_employees.json
+    with open("todo_all_employees.json", "w", encoding="utf-8") as json_file:
+        json.dump(all_tasks, json_file, indent=4)
 
-    print(
-        f"Data for employee ID {employee_id} has been "
-        f"exported to {json_filename}"
-    )
+    print("Data for all employees has been exported to todo_all_employees.json")
+
+
+if __name__ == "__main__":
+   export_all_employees_tasks()
