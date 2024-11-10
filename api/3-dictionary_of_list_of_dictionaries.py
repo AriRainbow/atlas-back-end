@@ -27,8 +27,7 @@ def fetch_data(url):
             return response.json()
         except json.JSONDecodeError:
             # Print the first 100 characters of the response
-            print(f"Failed to decode JSON from the response: "
-                  f"{response.text[:100]}")
+            print(f"Failed to decode JSON from the response: {response.text[:100]}")
             sys.exit(1)
 
     except requests.exceptions.RequestException as err:
