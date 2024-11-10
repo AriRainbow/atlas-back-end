@@ -21,7 +21,7 @@ def fetch_data(url):
         # Check if the response is empty
         if not response.text.strip():
             raise ValueError("Empty response from the API")
-  
+
         return response.json()
 
     except requests.exceptions.RequestException as err:
