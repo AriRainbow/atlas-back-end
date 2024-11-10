@@ -22,7 +22,13 @@ def fetch_data(url):
         if not response.text.strip():
             raise ValueError("Empty response from the API")
 
-        return response.json()
+        # Attempt to decode the JSON response
+        try:
+            return response.json()
+        except json.JSONDecodeError:
+            # Print the first 100 characters of the response
+            print(f"Failed to decode JSON from the response: {response.text[:100]}")
+            sys.exit(1)
 
     except requests.exceptions.RequestException as err:
         # Add debugging info for the request error
