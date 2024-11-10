@@ -16,7 +16,7 @@ def fetch_data(url):
     try:
         response = requests.get(url)
         # Raise HTTPError for bad responses (4xx, 5xx)
-        response.raise_for_status()  
+        response.raise_for_status() 
         return response.json()
     except requests.exceptions.RequestException as err:
         print(f"Error fetching data from {url}: {err}")
@@ -68,4 +68,3 @@ if __name__ == "__main__":
         f"Data for employee ID {employee_id} has been "
         f"exported to {json_filename}"
     )
-   
