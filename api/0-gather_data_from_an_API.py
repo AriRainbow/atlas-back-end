@@ -37,8 +37,9 @@ if __name__ == "__main__":
     completed_tasks = sum(1 for task in todos if task.get("completed"))
 
     # Print the employee's TODO list progress
-    print(f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):")
-    
+    print(f"Employee {employee_name} is done with tasks"
+          f"({completed_tasks}/{total_tasks}):")
+
     # Print the titles of completed tasks
     for task in todos:
         if task.get("completed"):
