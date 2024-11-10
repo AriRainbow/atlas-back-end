@@ -14,7 +14,7 @@ import sys
 def fetch_data(url):
     """Helper function to fetch data from the API and handle errors."""
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)  # Set tineout for the request
         # Raise HTTPError for bad responses (4xx, 5xx)
         response.raise_for_status()
 
@@ -29,6 +29,7 @@ def fetch_data(url):
             # Print the first 100 characters of the response
             print(f"Failed to decode JSON from the response: "
                   f"{response.text[:100]}")
+            print(f"Full response: {response.text}")  # Full response for debugging
             sys.exit(1)
 
     except requests.exceptions.RequestException as err:
@@ -62,6 +63,11 @@ def export_all_employees_tasks():
         user_id = user['id']
         username = user['username']
         tasks = fetch_data(f"{base_url}/todos?userId={user_id}")
+
+        # Skip empty responses
+        if not tasks:
+            print(f"No tasks found for user {username} (ID: {user_id})")
+            continue
 
         # Create a list of tasks for the user in the required format
         task_list = [
