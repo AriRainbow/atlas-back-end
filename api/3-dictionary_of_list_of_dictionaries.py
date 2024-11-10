@@ -10,15 +10,18 @@ import json
 import requests
 import sys
 
+
 def fetch_data(url):
     """Helper function to fetch data from the API and handle errors."""
     try:
         response = requests.get(url)
-        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx, 5xx)
+        # Raise HTTPError for bad responses (4xx, 5xx)
+        response.raise_for_status()  
         return response.json()
     except requests.exceptions.RequestException as err:
         print(f"Error fetching data from {url}: {err}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     # Check if the script receives the employee ID as an argument
@@ -65,4 +68,4 @@ if __name__ == "__main__":
         f"Data for employee ID {employee_id} has been "
         f"exported to {json_filename}"
     )
-    
+   
